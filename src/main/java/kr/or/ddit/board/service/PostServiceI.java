@@ -1,0 +1,28 @@
+package kr.or.ddit.board.service;
+
+import java.util.List;
+import java.util.Map;
+
+import kr.or.ddit.board.model.PageVo;
+import kr.or.ddit.board.model.PostVo;
+
+public interface PostServiceI {
+	/**
+	 * 모든 게시글의 목록을 출력하는 메서드
+	 * @param board_no
+	 * @return
+	 */
+	List<PostVo> getAllPost(int board_no);
+
+	Map<String, Object> selectPostPageList(PageVo pageVo);
+	
+	int selectPostTotalCnt();
+	
+	/**
+	 * 선택한 하나의 게시글의 정보를 가져오는 메서드
+	 * @param post_no
+	 * @return
+	 */
+	PostVo getPost(int post_no);
+	
+}
