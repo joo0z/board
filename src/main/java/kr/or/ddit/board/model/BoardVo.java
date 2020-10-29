@@ -1,8 +1,9 @@
 package kr.or.ddit.board.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BoardVo {
+public class BoardVo implements Serializable{
 	
 	private int board_no;
 	private String board_title;
@@ -65,8 +66,5 @@ public class BoardVo {
 		return true;
 	}
 
-	
-	
-	
 	
 }

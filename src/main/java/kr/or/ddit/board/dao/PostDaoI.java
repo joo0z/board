@@ -21,7 +21,7 @@ public interface PostDaoI {
 	 * @param sqlSession
 	 * @return
 	 */
-	int selectPostTotalCnt(SqlSession sqlSession);
+	int selectPostTotalCnt(SqlSession sqlSession, int board_no);
 
 	/**
 	 * 한 페이지당 반환할 게시글 List를 출렷하는 메서드
@@ -37,4 +37,18 @@ public interface PostDaoI {
 	 * @return
 	 */
 	PostVo getPost(int post_no);
+	
+	/**
+	 * 하나의 게시물을 등록하는 메서드
+	 * @param postVo
+	 * @return 성공 : 1, 실패 : 0
+	 */
+	int createPost(PostVo postVo);
+	
+	/**
+	 * 하나의 게시물을 삭제하는 메서드
+	 * @param postVo
+	 * @return 성공 : 1, 실패 : 0
+	 */
+	int deletePost(int post_no);
 }

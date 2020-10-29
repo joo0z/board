@@ -16,7 +16,7 @@ import kr.or.ddit.board.model.BoardVo;
 import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceI;
 
-//@WebServlet("/createBoard")
+@WebServlet("/createBoard")
 public class CreateBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = LoggerFactory.getLogger(CreateBoardServlet.class);

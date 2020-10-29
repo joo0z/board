@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import kr.or.ddit.board.model.BoardVo;
 import kr.or.ddit.board.service.BoardService;
 import kr.or.ddit.board.service.BoardServiceI;
 
+@WebServlet("/updateBoard")
 public class UpdateBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(UpdateBoardServlet.class);

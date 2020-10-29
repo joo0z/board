@@ -16,7 +16,7 @@ public interface PostServiceI {
 
 	Map<String, Object> selectPostPageList(PageVo pageVo);
 	
-	int selectPostTotalCnt();
+	int selectPostTotalCnt(int board_no);
 	
 	/**
 	 * 선택한 하나의 게시글의 정보를 가져오는 메서드
@@ -25,4 +25,17 @@ public interface PostServiceI {
 	 */
 	PostVo getPost(int post_no);
 	
+	/**
+	 * 하나의 게시물을 등록하는 메서드
+	 * @param postVo
+	 * @return 성공 : 1, 실패 : 0
+	 */
+	int createPost(PostVo postVo);
+	
+	/**
+	 * 하나의 게시물을 삭제하는 메서드
+	 * @param postVo
+	 * @return 성공 : 1, 실패 : 0
+	 */
+	int deletePost(int post_no);
 }

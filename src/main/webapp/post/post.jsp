@@ -28,53 +28,57 @@
 <div class="col-sm-3 col-md-2 sidebar">
 	<%@ include file="/layout/left.jsp" %>
 </div><div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-<div class="row">
-	<div class="col-sm-8 blog-main"> <br>
-		<h2 class="sub-header">${board_title } </h2>
-		<div class="table-responsive">
-			<table class="table table-striped">
-					<tr>
-						<th>게시글 번호</th>
-						<th>제목</th>
-						<th>작성자 아이디</th>
-						<th>작성 일시</th>
-					</tr>
-				<tbody id="postList">
-		            <c:forEach items="${postList }" var="post">
-		               <tr data-userid="${post.post_no}">
-			               <td>${post.post_no }</td>
-			               <td><a href="/postContent?post_no=${post.post_no }">${post.post_title }</a></td>
-			               <td>${post.user_id }</td>
-			               <td>
-			               	<fmt:formatDate value="${post.post_regdate }" pattern="yyyy-MM-dd"/>
-			               </td>
-		               </tr>
-		            </c:forEach>
-				</tbody>
-			</table>
-		</div>
-
-		<a href="${cp }/createPost" class="btn btn-default pull-right">새글 등록</a>
-		pages : ${pages}
-		page : ${page }
-		<div class="text-center">
-			<ul class="pagination">
-				<c:forEach var="i" begin="1" end="${pages }">
-					<c:choose>
-						<c:when test="${i == page}">
-							<li class="active"><span>${i }</span></li>
-						</c:when>
-						<c:otherwise>
-							<li ><a href="${pageContext.request.contextPath }/postList?page=${i}&board_no=${board_no}">${i }</a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-			</ul>
+		<div class="row">
+			<div class="col-sm-8 blog-main"> <br>
+				<h2 class="sub-header">${board_title } </h2>
+				<div class="table-responsive">
+					<table class="table table-striped">
+							<tr>
+								<th>게시글 번호</th>
+								<th>제목</th>
+								<th>작성자 아이디</th>
+								<th>작성 일시</th>
+							</tr>
+						<tbody id="postList">
+				            <c:forEach items="${postList }" var="post">
+				               <tr data-userid="${post.post_no}">
+					               <td>${post.post_no }</td>
+						            <c:choose>
+						            	<c:when test="${post.post_status == 'Y' }">
+								               <td><a href="/postContent?post_no=${post.post_no }">${post.post_title }</a></td>
+							             </c:when>
+							             <c:otherwise><td>[삭제된 게시물입니다.]</td></c:otherwise>
+						             </c:choose>
+					               <td>${post.user_id }</td>
+					               <td>
+					               	<fmt:formatDate value="${post.post_regdate }" pattern="yyyy-MM-dd"/>
+					               </td>
+				               </tr>
+				            </c:forEach>
+						</tbody>
+					</table>
+				</div>
+		
+				<a href="${cp }/createPost" class="btn btn-default pull-right">새글 등록</a>
+				pages : ${pages}
+				page : ${page }
+				<div class="text-center">
+					<ul class="pagination">
+						<c:forEach var="i" begin="1" end="${pages }">
+							<c:choose>
+								<c:when test="${i == page}">
+									<li class="active"><span>${i }</span></li>
+								</c:when>
+								<c:otherwise>
+									<li ><a href="${pageContext.request.contextPath }/postList?page=${i}&board_no=${board_no}">${i }</a></li>
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
-	</div>
-		</div>
-	</div>
 </body>
 </html>

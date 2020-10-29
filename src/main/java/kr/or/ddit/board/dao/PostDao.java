@@ -19,8 +19,8 @@ public class PostDao implements PostDaoI{
 	}
 
 	@Override
-	public int selectPostTotalCnt(SqlSession sqlSession) {
-		return sqlSession.selectOne("post.selectPostTotalCnt");
+	public int selectPostTotalCnt(SqlSession sqlSession, int board_no) {
+		return sqlSession.selectOne("post.selectPostTotalCnt", board_no);
 	}
 
 	@Override
@@ -34,6 +34,40 @@ public class PostDao implements PostDaoI{
 		PostVo postVo = sqlSession.selectOne("post.getPost", post_no);
 		sqlSession.close();
 		return postVo;
+	}
+
+	@Override
+	public int createPost(PostVo postVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		int cnt = 0;
+		try {
+			cnt = sqlSession.insert("post.createPost", postVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (cnt == 1) {
+			sqlSession.commit();
+		}else {
+			sqlSession.rollback();
+		}
+		sqlSession.close();
+		
+		return cnt;
+	}
+
+	@Override
+	public int deletePost(int post_no) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		int cnt = sqlSession.delete("post.deletePost", post_no);
+		
+		if (cnt == 1) {
+			sqlSession.commit();
+		}else {
+			sqlSession.rollback();
+		}
+		sqlSession.close();
+		return cnt;
 	}
 	
 }

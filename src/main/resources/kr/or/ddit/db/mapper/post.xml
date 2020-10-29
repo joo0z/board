@@ -7,10 +7,11 @@
   		SELECT * 
 		FROM post
 		WHERE board_no = #{board_no}
+		ORDER BY post_no DESC
   </select>
   
 <!--   page 설정 -->
-	<select id="selectPostPageList" resultType="PostVo" parameterType="pageVo">
+	<select id="selectPostPageList" resultType="PostVo" parameterType="PageVo">
   	 SELECT *
 		FROM
 		    (select rownum rn, a.*
@@ -18,17 +19,46 @@
 		        (select *
 		            from post
 		            WHERE board_no=#{board_no}
-		            order by post_no) a)
-		WHERE rn BETWEEN (#{page} -1) * #{pageSize} + 1 AND #{page} * #{pageSize}      
+		            order by post_no DESC) a)
+		WHERE rn BETWEEN (#{page} -1) * #{pageSize} + 1 AND #{page} * #{pageSize}  
   </select>
-  <select id="selectPostTotalCnt" resultType="int">
+  <select id="selectPostTotalCnt" resultType="int" parameterType="int">
   		SELECT COUNT(*)
-  		FROM post
+  		FROM post 
+  		WHERE board_no = #{board_no}
   </select>
   <select id="getPost" parameterType="int" resultType="PostVo">
   	SELECT *
 	FROM post
 	WHERE post_no=#{post_no}
   </select>
+  <insert id="createPost" parameterType="PostVo">
+  	INSERT INTO post (POST_TITLE, POST_CONTENT, POST_STATUS, POST_REGDATE, POST_NO, USER_ID, BOARD_NO)
+	VALUES (#{post_title}, #{post_content}, #{post_status}, SYSDATE, POST_SEQ.NEXTVAL, 
+			#{user_id}, #{board_no})
+  	<selectKey keyProperty="post_no" resultType="int">
+  		SELECT POST_SEQ.CURRVAL FROM dual
+  	</selectKey>
+  </insert>
+  <insert id="createFile" parameterType="FileVo">
+  	INSERT INTO files (FILE_NO,FILE_NAME,FILE_REALNM,POST_NO)
+  	VALUES (FILE_SEQ.NEXTVAL, #{file_name}, #{file_realnm}, #{post_no})
+  </insert>
+  <select id="getAllFile" parameterType="int" resultType="FileVo">
+  	SELECT *
+	FROM files
+	WHERE post_no= #{post_no}
+  </select>
+  <update id="deletePost" parameterType="int">
+  	UPDATE post 
+	SET post_status = 'N' 
+	WHERE post_no = ${post_no}
+  </update>
+  <select id="getFile" parameterType="int" resultType="FileVo">
+  	SELECT *
+	FROM files
+	WHERE file_no= #{file_no}
+  </select>
+  
   
 </mapper>
