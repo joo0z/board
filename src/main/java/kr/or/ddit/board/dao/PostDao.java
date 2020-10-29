@@ -69,5 +69,19 @@ public class PostDao implements PostDaoI{
 		sqlSession.close();
 		return cnt;
 	}
+
+	@Override
+	public int updatePost(PostVo postVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		int cnt = sqlSession.delete("post.updatePost", postVo);
+		
+		if (cnt == 1) {
+			sqlSession.commit();
+		}else {
+			sqlSession.rollback();
+		}
+		sqlSession.close();
+		return cnt;
+	}
 	
 }

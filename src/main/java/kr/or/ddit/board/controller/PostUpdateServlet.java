@@ -1,7 +1,7 @@
 package kr.or.ddit.board.controller;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,45 +24,74 @@ import kr.or.ddit.board.service.PostService;
 import kr.or.ddit.board.service.PostServiceI;
 import kr.or.ddit.fileupload.FileUploadUtil;
 
-@WebServlet("/createPost")
+@WebServlet("/postUpdate")
 @MultipartConfig
-public class CreatePostServlet extends HttpServlet {
+public class PostUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = LoggerFactory.getLogger(CreatePostServlet.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(PostUpdateServlet.class);
 	private PostServiceI postService;
 	private FileServiceI fileService;
+    private FileVo fileVo;   
 	
 	@Override
 	public void init() throws ServletException {
 		postService = new PostService();
 		fileService = new FileService();
 	}
-       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/post/createPost.jsp").forward(request, response);
+		
+		logger.debug("doGet");
+		request.setCharacterEncoding("utf-8");
+		int post_no = Integer.parseInt(request.getParameter("post_no"));
+		logger.debug("post_no :{}", post_no);
+		
+		String post_title = request.getParameter("post_title");
+		String post_content= request.getParameter("post_content");
+		int board_no = Integer.parseInt(request.getParameter("board_no"));
+		logger.debug("parameter :{},{},{}",post_title , post_content, board_no);
+		
+		List<FileVo> fileList = fileService.getAllFile(post_no);
+		request.setAttribute("fileList", fileList);
+		logger.debug("fileList : {}", fileList);
+		
+		request.getRequestDispatcher("/post/updatePost.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("doPost");
 		request.setCharacterEncoding("utf-8");
-		String post_title = request.getParameter("post_title");  
-		String post_content = request.getParameter("post_content");
-		String post_status = request.getParameter("post_status"); 
-		String user_id = request.getParameter("user_id");     
-		int board_no = Integer.parseInt(request.getParameter("board_no"));   
-		logger.debug("parameter : {}, {}, {}, {}, {}", post_title,post_content,post_status,user_id,board_no  );
+		int post_no = Integer.parseInt(request.getParameter("post_no"));
+		logger.debug("post_no :{}", post_no);
 		
-		PostVo postVo = new PostVo();
+		String post_title = request.getParameter("post_title");
+		String post_content= request.getParameter("post_content");
+		int board_no = Integer.parseInt(request.getParameter("board_no"));
+		logger.debug("post_title,post_content,board_no :{},{},{}",post_title , post_content, board_no);
+		
+		PostVo postVo = new PostVo();   
 		postVo.setPost_title(post_title);
 		postVo.setPost_content(post_content);
-		postVo.setPost_status(post_status);
-		postVo.setUser_id(user_id);
+		postVo.setPost_no(post_no);
 		postVo.setBoard_no(board_no);
+		logger.debug("===========");
 		
-		int cnt = postService.createPost(postVo);
+		int cnt = postService.updatePost(postVo);
 		logger.debug("cnt : {}", cnt);
-		for (int i = 1; i < 6; i++) {
+		
+		// input요소를 가져오는 List
+		List<Part> partList = new ArrayList(request.getParts());
+		int fileCount = 0;
+		logger.debug("partSize : {}",partList.size());
+		for(Part part : partList) {
+			// realfilename이 없을 때 까지 count
+			if(part.getName().indexOf("realfilename")!= -1) {
+				fileCount++;
+			}
+		}
+		
+		for (int i = 1; i < fileCount+1; i++) {
 			Part profile = request.getPart("realfilename" + i);
+			logger.debug("profile-num : {}",profile.getName());
 			logger.debug("file : {}", profile.getHeader("Content-Disposition"));
 			String realfilename = FileUploadUtil.getFilename(profile.getHeader("Content-Disposition"));
 			String file_realnm = UUID.randomUUID().toString();
@@ -72,7 +101,7 @@ public class CreatePostServlet extends HttpServlet {
 			if (profile.getSize() > 0) {
 				filePath = "D:\\profile\\" + file_realnm + "." + extension;
 				profile.write(filePath);
-				int post_no = postVo.getPost_no();      
+				post_no = postVo.getPost_no();      
 				FileVo fileVo = new FileVo();
 				fileVo.setFile_name(filePath);
 				fileVo.setFile_realnm(realfilename);
@@ -81,17 +110,17 @@ public class CreatePostServlet extends HttpServlet {
 				int cnt2 = fileService.createFile(fileVo);
 				logger.debug("cnt : {}", cnt2);
 			}
-			
-		}
-		if (cnt == 1) {
-			// 서버쪽 상태가 바뀌는 경우 sendRedirect요청 forword X
-			// contextPath 입력해줘야 한다.
-			response.sendRedirect(request.getContextPath() + "/postList?board_no="+board_no);
-		}else {
-			// 회원등록 실패
-			doGet(request, response);
 		}
 		
+		String[] file_no_arr = request.getParameterValues("del_nos");
+		logger.debug("del_nos : {}", file_no_arr);
+		
+		
+		if (cnt == 1 ) {
+			response.sendRedirect(request.getContextPath() + "/postList?board_no="+board_no);
+		}else {
+			doGet(request, response);
+		}
 	}
 
 }

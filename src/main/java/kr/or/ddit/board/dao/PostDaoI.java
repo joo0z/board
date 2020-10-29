@@ -51,4 +51,11 @@ public interface PostDaoI {
 	 * @return 성공 : 1, 실패 : 0
 	 */
 	int deletePost(int post_no);
+	
+	/**
+	 * 게시글 수정을 위한 메서드
+	 * @param post_no
+	 * @return
+	 */
+	int updatePost(PostVo postVo);
 }

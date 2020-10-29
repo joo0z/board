@@ -59,4 +59,9 @@ public class PostService implements PostServiceI{
 		return postDao.deletePost(post_no);
 	}
 
+	@Override
+	public int updatePost(PostVo postVo) {
+		return postDao.updatePost(postVo);
+	}
+
 }

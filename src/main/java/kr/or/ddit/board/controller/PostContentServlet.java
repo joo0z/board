@@ -36,8 +36,9 @@ public class PostContentServlet extends HttpServlet {
 		int post_no = Integer.parseInt(request.getParameter("post_no"));
 		PostVo postVo = postService.getPost(post_no);
 		request.setAttribute("postVo", postVo);
-		List<FileVo> fileList = fileService.getAllFile(post_no);
 		
+		List<FileVo> fileList = fileService.getAllFile(post_no);
+		logger.debug("fileList : {}", fileList);
 		request.setAttribute("fileList", fileList);
 		request.getRequestDispatcher("/post/postContent.jsp").forward(request, response);
 		

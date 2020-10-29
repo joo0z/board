@@ -29,8 +29,6 @@ public class PostDeleteServlet extends HttpServlet {
 		int post_no = Integer.parseInt(request.getParameter("post_no"));
 		PostVo postVo = postService.getPost(post_no);
 		request.setAttribute("postVo", postVo);
-		request.getRequestDispatcher("/post/updatePost.jsp").forward(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

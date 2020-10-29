@@ -30,8 +30,7 @@
 				<%@include file="/layout/left.jsp"%>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<form class="form-horizontal" role="form" action="${cp }/postUpdate"
-					method="">
+				<form class="form-horizontal" role="form" action="${cp }/postUpdate" method="get">
 					<div class="form-group">
 						<hr>
 						<label class="col-sm-2 control-label">제목</label>
@@ -41,12 +40,10 @@
 						</div>
 					</div>
 					<hr>
-
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">글내용</label>
 						<div class="col-sm-10">
-							<input type="hidden" value="${postVo.post_content }"
-								name="post_content">${postVo.post_content }</label>
+							<input type="hidden" value="${postVo.post_content }" name="post_content">${postVo.post_content }
 						</div>
 					</div>
 					<hr>
@@ -61,15 +58,15 @@
 							</c:forEach>
 						</div>
 					</div>
-				</form>
 					<hr>
-					<%@include file="/include/reply.jsp"%>
-				<hr>
 					<div class="col-sm-offset-2 col-sm-10">
 						<c:if test="${S_MEMBER.user_id == postVo.user_id }">
-							<button type="submit" id="update" class="btn btn-default">수정</button>
+								<input type="hidden" value="${postVo.post_no }" name="post_no">
+								<input type="hidden" value="${postVo.board_no }" name="board_no">
+								<button type="submit" class="btn btn-default">수정</button>
 						</c:if>
 					</div>
+				</form>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<form action="${cp }/postDelete" method="post">
@@ -90,7 +87,9 @@
 						</form>
 					</div>
 				</div>
-				
+				<br>
+				<hr>
+				<%@include file="/include/reply.jsp"%>
 			</div>
 		</div>
 	</div>

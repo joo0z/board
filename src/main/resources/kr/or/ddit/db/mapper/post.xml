@@ -52,13 +52,29 @@
   <update id="deletePost" parameterType="int">
   	UPDATE post 
 	SET post_status = 'N' 
-	WHERE post_no = ${post_no}
+	WHERE post_no = #{post_no}
   </update>
   <select id="getFile" parameterType="int" resultType="FileVo">
   	SELECT *
 	FROM files
 	WHERE file_no= #{file_no}
   </select>
+  <update id="updatePost" parameterType="PostVo">
+  	UPDATE post SET post_title = #{post_title}, 
+  					post_content = #{post_content}, 
+  					board_no= #{board_no}
+	WHERE post_no=  #{post_no}
+  </update>
+  <update id="updateFile" parameterType="FileVo">
+  	UPDATE files SET file_name = #{file_name}, 
+  					 file_realnm = #{file_realnm}
+  					 board_no = #{board_no}
+	WHERE file_no=  #{file_no}
+  </update>
+  <delete id="deleteFile" parameterType="int">
+  	DELETE files
+	WHERE file_no = #{file_no}
+ </delete>
   
   
 </mapper>
