@@ -45,4 +45,24 @@ public class FileDao implements FileDaoI{
 		return fileVo;
 	}
 
+	@Override
+	public int deleteFile(int file_no) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		int cnt = 0;
+		try {
+			cnt = sqlSession.delete("post.deleteFile", file_no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (cnt == 1) {
+			sqlSession.commit();
+		}else {
+			sqlSession.rollback();
+		}
+		sqlSession.close();
+		
+		return cnt;
+	}
+
 }

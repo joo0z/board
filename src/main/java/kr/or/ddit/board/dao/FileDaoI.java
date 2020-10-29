@@ -26,4 +26,11 @@ public interface FileDaoI {
 	 * @return
 	 */
 	FileVo getFile(int file_no);
+	
+	/**
+	 * 파일을 삭제하는 메서드
+	 * @param file_no
+	 * @return
+	 */
+	int deleteFile(int file_no);
 }

@@ -30,6 +30,11 @@ public class FileService implements FileServiceI{
 	public FileVo getFile(int file_no) {
 		return fileDao.getFile(file_no);
 	}
+
+	@Override
+	public int deleteFile(int file_no) {
+		return fileDao.deleteFile(file_no);
+	}
 	
 
 }
