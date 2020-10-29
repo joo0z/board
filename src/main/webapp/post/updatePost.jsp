@@ -51,8 +51,9 @@
 				 res = 5-delBtn.length+1;
     			 $(this).parent().remove();
      			 $('.result').append("<input type='file' name='realfilename"+res+"'>");
-     			 $('.result').append("<input type='hidden' name='del_nos' value='${files.file_no}'>");
-     			 
+     			 var file_no = $(this).parents('label.fileno').data('file_no');
+ 				console.log(file_no);
+     			 $('.result').append("<input id='del_nos' type='hidden' name='del_nos' value='"+file_no+"'>");
 			})
 		}
  	}
@@ -93,7 +94,7 @@
 						<div class="col-sm-10">
 							<c:if test="${fileList != null}">
 								<c:forEach var="files" items="${fileList}" varStatus="status">
-									<label class="control-label">
+									<label data-file_no="${files.file_no }" class="control-label fileno">
 										<a id="filBtn${status.count}" href="/fileDownload?file_no=${files.file_no}">${files.file_realnm }</a>
 										<button type="button" class="btn btn-default delBtn">X</button>
 									</label> 
@@ -105,7 +106,6 @@
 							<p>${i }</p>
 						</c:forEach>
 							<div class="result">
-								<input id="del_nos" type="hidden" name="del_nos" value="">
 							</div>
 						</div>
 					</div>
