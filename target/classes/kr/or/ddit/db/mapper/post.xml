@@ -75,6 +75,21 @@
   	DELETE files
 	WHERE file_no = #{file_no}
  </delete>
-  
+<!--   reply -->
+ <select id="getAllReply" resultType="ReplyVo" parameterType="int">
+ 	SELECT * 
+	FROM reply
+	WHERE post_no = #{post_no}
+	ORDER BY reply_no DESC
+ </select>
+ <insert id="createReply" parameterType="ReplyVo">
+ 	INSERT INTO reply (REPLY_NO,REPLY_CONTENT,REPLY_STATUS,REPLY_REGDATE,USER_ID,POST_NO)
+	VALUES 	(reply_SEQ.NEXTVAL, #{reply_content}, #{reply_status}, SYSDATE, #{user_id}, #{post_no})
+ </insert>
+ <update id="deleteReply" parameterType="int">
+ 	UPDATE reply
+	SET reply_status = 'N' 
+	WHERE reply_no = #{reply_no}
+ </update>
   
 </mapper>

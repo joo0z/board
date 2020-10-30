@@ -10,6 +10,7 @@
 		<typeAlias type="kr.or.ddit.board.model.PostVo" alias="PostVo"/>
 		<typeAlias type="kr.or.ddit.board.model.PageVo" alias="PageVo"/>
 		<typeAlias type="kr.or.ddit.board.model.FileVo" alias="FileVo"/>
+		<typeAlias type="kr.or.ddit.reply.model.ReplyVo" alias="ReplyVo"/>
 	</typeAliases>
 
   <environments default="development">

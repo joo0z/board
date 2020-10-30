@@ -18,6 +18,9 @@ import kr.or.ddit.board.service.FileService;
 import kr.or.ddit.board.service.FileServiceI;
 import kr.or.ddit.board.service.PostService;
 import kr.or.ddit.board.service.PostServiceI;
+import kr.or.ddit.reply.model.ReplyVo;
+import kr.or.ddit.reply.service.ReplyService;
+import kr.or.ddit.reply.service.ReplyServiceI;
 
 @WebServlet("/postContent")
 public class PostContentServlet extends HttpServlet {
@@ -25,11 +28,13 @@ public class PostContentServlet extends HttpServlet {
 	private static final Logger logger = LoggerFactory.getLogger(PostContentServlet.class);
 	private PostServiceI postService;
 	private FileServiceI fileService;
+	private ReplyServiceI replyService;
 
 	@Override
 	public void init() throws ServletException {
 		postService = new PostService();
 		fileService = new FileService();
+		replyService = new ReplyService();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -40,8 +45,12 @@ public class PostContentServlet extends HttpServlet {
 		List<FileVo> fileList = fileService.getAllFile(post_no);
 		logger.debug("fileList : {}", fileList);
 		request.setAttribute("fileList", fileList);
-		request.getRequestDispatcher("/post/postContent.jsp").forward(request, response);
 		
+		List<ReplyVo> replyList = replyService.getAllReply(post_no);
+		logger.debug("replyList : {}", replyList);
+		request.setAttribute("replyList", replyList);
+		
+		request.getRequestDispatcher("/post/postContent.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

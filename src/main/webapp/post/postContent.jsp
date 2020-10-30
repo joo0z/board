@@ -15,11 +15,6 @@
 <title>Jsp</title>
 <%@include file="/layout/commonlib.jsp"%>
 <script>
-	$(document).ready(function() {
-		$('#profileDownBtn').on('click', function(){
-// 			document.location="/fileDownload?file_no=${files.file_no}";
-		})
-	});
 </script>
 </head>
 <body>
@@ -65,6 +60,7 @@
 								<input type="hidden" value="${postVo.board_no }" name="board_no">
 								<button type="submit" class="btn btn-default">수정</button>
 						</c:if>
+						
 					</div>
 				</form>
 				<div class="form-group">
@@ -87,9 +83,51 @@
 						</form>
 					</div>
 				</div>
-				<br>
 				<hr>
-				<%@include file="/include/reply.jsp"%>
+				<br>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<table class="table table-striped">
+				            <c:forEach items="${replyList }" var="replys">
+								<form action="${cp }/deleteReply?post_no=${postVo.post_no}" method="post">
+				               <tr>
+						            <c:choose>
+						            	<c:when test="${replys.reply_status == 'Y' }">
+								               <td>${replys.reply_content }</td>
+								               <input type="hidden" value="${replys.reply_no }" name="reply_no">
+							             </c:when>
+							             <c:otherwise><td>[삭제된 댓글입니다.]</td></c:otherwise>
+						             </c:choose>
+					               <td>
+					               [${replys.user_id }/<fmt:formatDate value="${replys.reply_regdate }" pattern="yyyy-MM-dd"/>]
+					               </td>
+					               <c:if test="${replys.user_id == postVo.user_id }">
+					               <td><button type="submit" >댓글삭제</button></td>
+					               </c:if>
+				               </tr>
+								</form>
+				            </c:forEach>
+						</table>
+					</div>
+				</div>
+				<hr>
+				<br>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<form action="${cp }/createReply" method="post">
+						<table>
+							<tr>
+								<th><label class="col-sm-2 control-label">댓글</label></th>
+								<th><textarea name="reply_content" rows="3" cols="80"></textarea></th>
+								<th><button type="submit" class="btn btn-default">댓글저장</button></th>
+							</tr>
+						</table>
+						<input type="hidden" value="Y" name="reply_status">
+						<input type="hidden" value="${S_MEMBER.user_id}" name="user_id">
+						<input type="hidden" value="${postVo.post_no}" name="post_no">
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -44,10 +44,6 @@ $(document).ready(function(){
 		<div class="table-responsive">
 			<form id="frm" action="${cp }/createBoard" method="post" >
 				생성 게시판 이름 : <input name="board_title" type="text" value="테이블">
-				<select>
-					<option>사용</option>
-					<option>미사용</option>
-				</select>
 				<input id="crtBtn" type="submit" class="btn btn-default pull-right" value="생성"> 
 			</form>
 				<table class="table table-striped">
