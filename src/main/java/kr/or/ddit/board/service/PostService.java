@@ -64,4 +64,9 @@ public class PostService implements PostServiceI{
 		return postDao.updatePost(postVo);
 	}
 
+	@Override
+	public int createAnswer(PostVo postVo) {
+		return postDao.createAnswer(postVo);
+	}
+
 }

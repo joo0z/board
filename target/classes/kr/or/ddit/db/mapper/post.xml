@@ -91,5 +91,14 @@
 	SET reply_status = 'N' 
 	WHERE reply_no = #{reply_no}
  </update>
+<!--  답글 -->
+ <insert id="createAnswer" parameterType="PostVo">
+  	INSERT INTO post (POST_TITLE, POST_CONTENT, POST_STATUS, POST_REGDATE, POST_NO, USER_ID, BOARD_NO, POST_PNO)
+	VALUES (#{post_title}, #{post_content}, #{post_status}, SYSDATE, POST_SEQ.NEXTVAL, 
+			#{user_id}, #{board_no}, #{post_pno})
+  	<selectKey keyProperty="post_no" resultType="int">
+  		SELECT POST_SEQ.CURRVAL FROM dual
+  	</selectKey>
+ </insert>
   
 </mapper>

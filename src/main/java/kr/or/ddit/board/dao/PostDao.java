@@ -83,5 +83,25 @@ public class PostDao implements PostDaoI{
 		sqlSession.close();
 		return cnt;
 	}
+
+	@Override
+	public int createAnswer(PostVo postVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		int cnt = 0;
+		try {
+			cnt = sqlSession.insert("post.createAnswer", postVo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (cnt == 1) {
+			sqlSession.commit();
+		}else {
+			sqlSession.rollback();
+		}
+		sqlSession.close();
+		
+		return cnt;
+	}
 	
 }

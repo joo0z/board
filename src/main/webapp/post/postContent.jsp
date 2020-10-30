@@ -76,8 +76,9 @@
 				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
-						<form action="${cp }/reply" method="post">
+						<form action="${cp }/createAnswer">
 							<input type="hidden" value="${postVo.post_no }" name="post_no">
+							<input type="hidden" value="${S_MEMBER.user_id }" name="user_id">
 							<input type="hidden" value="${postVo.board_no }" name="board_no">
 							<button type="submit" class="btn btn-default">답글쓰기</button>
 						</form>

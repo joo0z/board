@@ -45,4 +45,11 @@ public interface PostServiceI {
 	 * @return
 	 */
 	int updatePost(PostVo postVo);
+	
+	/**
+	 * 답글 등록을 위한 메서드
+	 * @param postVo
+	 * @return
+	 */
+	int createAnswer(PostVo postVo);
 }
