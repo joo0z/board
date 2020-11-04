@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.board.model.BoardVo;
 import kr.or.ddit.board.model.FileVo;
 import kr.or.ddit.board.model.PostVo;
+import kr.or.ddit.board.service.BoardService;
+import kr.or.ddit.board.service.BoardServiceI;
 import kr.or.ddit.board.service.FileService;
 import kr.or.ddit.board.service.FileServiceI;
 import kr.or.ddit.board.service.PostService;
@@ -29,12 +32,14 @@ public class PostContentServlet extends HttpServlet {
 	private PostServiceI postService;
 	private FileServiceI fileService;
 	private ReplyServiceI replyService;
-
+	private BoardServiceI boardService;
+	
 	@Override
 	public void init() throws ServletException {
 		postService = new PostService();
 		fileService = new FileService();
 		replyService = new ReplyService();
+		boardService = new BoardService();
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -49,6 +54,9 @@ public class PostContentServlet extends HttpServlet {
 		List<ReplyVo> replyList = replyService.getAllReply(post_no);
 		logger.debug("replyList : {}", replyList);
 		request.setAttribute("replyList", replyList);
+		
+		List<BoardVo> boardList = boardService.getAllBoard();
+		request.setAttribute("boardList", boardList);
 		
 		request.getRequestDispatcher("/post/postContent.jsp").forward(request, response);
 	}

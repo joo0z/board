@@ -103,7 +103,6 @@
 							</c:if>
 						<c:forEach var="i" begin="1" end="${5-fileList.size()}">
 							<input type="file" name="realfilename${i }" >
-							<p>${i }</p>
 						</c:forEach>
 							<div class="result">
 							</div>

@@ -4,7 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-public class ApplicationListener implements ServletContextListener{
+public class ApplicationListener implements ServletContextListener{ // 서버가 켜질 때 기동이 되는 부분
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {

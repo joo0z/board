@@ -38,12 +38,15 @@ public class PostListServlet extends HttpServlet {
 		int board_no = Integer.parseInt(request.getParameter("board_no"));
 		request.setAttribute("board_no", board_no);
 		logger.debug("board_no : {}", board_no);
-		List<PostVo> postList = postService.getAllPost(board_no);
+//		List<PostVo> postList = postService.getAllPost(board_no);
 		
 		BoardVo boardVo = new BoardVo();
 		boardVo = boardService.getBoard(board_no);
 		logger.debug("boardVo : {}", boardVo);
 		request.setAttribute("board_title", boardVo.getBoard_title());
+		
+		List<BoardVo> boardList = boardService.getAllBoard();
+		request.setAttribute("boardList", boardList);
 		
 		//page
 		String page_str = request.getParameter("page");
@@ -58,13 +61,16 @@ public class PostListServlet extends HttpServlet {
 		PageVo pageVo = new PageVo(page, pageSize, board_no);
 		Map<String, Object> map = postService.selectPostPageList(pageVo);
 		request.setAttribute("postList", map.get("postList"));
+//		request.setAttribute("postList", postList);
 		request.setAttribute("pages", map.get("pages"));
 
 		request.getRequestDispatcher("/post/post.jsp").forward(request, response);
+//		response.sendRedirect(request.getContextPath() + "/createBoard");
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 
 }

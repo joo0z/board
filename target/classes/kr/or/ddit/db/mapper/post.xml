@@ -12,15 +12,35 @@
   
 <!--   page 설정 -->
 	<select id="selectPostPageList" resultType="PostVo" parameterType="PageVo">
-  	 SELECT *
-		FROM
-		    (select rownum rn, a.*
-		    from
-		        (select *
-		            from post
-		            WHERE board_no=#{board_no}
-		            order by post_no DESC) a)
-		WHERE rn BETWEEN (#{page} -1) * #{pageSize} + 1 AND #{page} * #{pageSize}  
+<!--   	 SELECT * -->
+<!-- 		FROM  -->
+<!-- 		    (SELECT rownum rn, a.* -->
+<!-- 		    	FROM -->
+<!-- 		        ((SELECT CONNECT_BY_ROOT(post_no) gn, LPAD(' ', (LEVEL-1)*3) || post_title -->
+<!-- 					FROM POST -->
+<!-- 					START WITH post_pno IS NULL AND board_no = #{board_no} -->
+<!-- 					CONNECT BY PRIOR post_no = post_pno) -->
+<!-- 					ORDER BY gn DESC, POST_NO ASC) a) -->
+<!-- 		WHERE rn BETWEEN (#{page} -1) * #{pageSize} + 1 AND #{page} * #{pageSize}   -->
+
+SELECT *
+   FROM
+       (SELECT ROWNUM rn, a.*
+       FROM
+           (select    board_no,
+             level boardlevel,
+            post_no,
+             post_pno,
+               case when level = 1 then '' else lpad('RE :', level*4, '-') end ||
+             case when post_status = 'N' then '**삭제된 게시글입니다.**'  else post_title end post_title,
+            user_id,
+             post_status,
+            post_regdate
+            from(select * from post where board_no = #{board_no})
+         start with  post_pno is null
+         connect by prior post_no = post_pno 
+         order siblings by post_regdate desc) a)
+      WHERE rn BETWEEN  (#{page}-1) * #{pageSize}+1   AND #{page} * #{pageSize}
   </select>
   <select id="selectPostTotalCnt" resultType="int" parameterType="int">
   		SELECT COUNT(*)

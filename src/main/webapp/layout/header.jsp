@@ -10,7 +10,7 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="#">JSP/SPRING 
+			<a class="navbar-brand" href="/userMain.jsp">JSP/SPRING 
 			<c:choose>
 				<c:when test="${S_MEMBER.user_id == S_MEMBER.user_id}">[${S_MEMBER.user_id}]</c:when>
 				<c:otherwise></c:otherwise>
@@ -25,7 +25,7 @@
 				<li><a href="#">Settings</a></li>
 				<li><a href="#">Profile</a></li>
 				<li><a href="#">Help</a></li>
-				<li><a href="/logout">Logout</a></li>
+				<li><a href="/login">Logout</a></li>
 			</ul>
 			<form class="navbar-form navbar-right">
 				<input type="text" class="form-control" placeholder="Search...">

@@ -8,12 +8,11 @@
 	<c:forEach var="board" items="${boardList }">
 		<c:if test="${board.board_status == 'Y' }">
 			<li class="active">
-				<a href="${pageContext.request.contextPath }/postList?board_no=${board.board_no }">${board.board_title }</a>
+				<a href="${cp }/postList?board_no=${board.board_no }">${board.board_title }</a>
 			</li>
 		</c:if>
 	</c:forEach>
 	<%
 		pageContext.getRequest();
 	%>
-	
 </ul>

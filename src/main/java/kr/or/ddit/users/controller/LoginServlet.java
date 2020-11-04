@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 		logger.debug("userLoginServlet doGet");
 		request.getRequestDispatcher("/userLogin.jsp").forward(request, response);
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String user_id = request.getParameter("user_id");
 		String user_pass = request.getParameter("user_pass");

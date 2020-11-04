@@ -115,10 +115,12 @@ public class PostUpdateServlet extends HttpServlet {
 		
 		String[] file_nos = request.getParameterValues("del_nos");
 		logger.debug("file_nos : {}", Arrays.toString(file_nos));
-		for (int i = 0; i < file_nos.length; i++) {
-			int file_no = Integer.parseInt(file_nos[i]);
-			int delCnt = fileService.deleteFile(file_no);
-			logger.debug("delCnt : {}", delCnt);
+		if (file_nos != null) {
+			for (int i = 0; i < file_nos.length; i++) {
+				int file_no = Integer.parseInt(file_nos[i]);
+				int delCnt = fileService.deleteFile(file_no);
+				logger.debug("delCnt : {}", delCnt);
+			}
 		}
 		
 		

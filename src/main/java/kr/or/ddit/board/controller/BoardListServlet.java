@@ -29,8 +29,8 @@ public class BoardListServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<BoardVo> list = boardService.getAllBoard();
-		request.setAttribute("boardList", list);
+		List<BoardVo> boardList = boardService.getAllBoard();
+		request.setAttribute("boardList", boardList);
 		request.getRequestDispatcher("/board/board.jsp").forward(request, response);
 	}
 
