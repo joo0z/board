@@ -64,16 +64,19 @@
 				page : ${page }
 				<div class="text-center">
 					<ul class="pagination">
-						<c:forEach var="i" begin="1" end="${pages }">
-							<c:choose>
-								<c:when test="${i == page}">
-									<li class="active"><span>${i }</span></li>
-								</c:when>
-								<c:otherwise>
-									<li ><a href="${pageContext.request.contextPath }/postList?page=${i}&board_no=${board_no}">${i }</a></li>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
+<%-- 						<c:if test=""> --%>
+							<li class="active"><span><</span></li>
+							<c:forEach var="i" begin="1" end="${pages }">
+								<c:choose>
+									<c:when test="${i == page}">
+										<li class="active"><span>${i }</span></li>
+									</c:when>
+									<c:otherwise>
+										<li ><a href="${pageContext.request.contextPath }/postList?page=${i}&board_no=${board_no}">${i }</a></li>
+									</c:otherwise>
+								</c:choose>
+							</c:forEach>
+<%-- 						</c:if>	 --%>
 					</ul>
 				</div>
 			</div>
